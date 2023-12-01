@@ -1,39 +1,27 @@
 def main() -> None:
     with open("input.txt") as f:
         lines = f.read().splitlines()
+
+    digits = {str(i): i for i in range(1, 10)}
+    numbers = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    digits_map = {numbers[i]: i + 1 for i in range(len(numbers))}
+    digits_map.update(digits)
+    digits_map_reversed = {"".join(reversed(key)): val for key, val in digits_map.items()}
     
     total = 0
-    digits = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-    digits_map = {digits[i]: i + 1 for i in range(len(digits))}
-    digits_map_reversed = {"".join(reversed(key)): val for key, val in digits_map.items()}
+
     for line in lines:
-        for i in range(len(line)):
-            ch = line[i]
-            if ch.isdigit():
-                total += int(ch) * 10
-                break
-            flag = False
-            for digit_word in digits_map:
-                if line[i:].startswith(digit_word):
-                    flag = True
-                    total += digits_map[digit_word] * 10
+        for line, mult, d_map in [(line, 10, digits_map), (line[::-1], 1, digits_map_reversed)]:
+            for i in range(len(line)):
+                flag = False
+                for digit_word in d_map:
+                    if line[i:].startswith(digit_word):
+                        flag = True
+                        total += d_map[digit_word] * mult
+                        break
+                if flag: 
                     break
-            if flag: 
-                break
-        line = line[::-1]
-        for i in range(len(line)):
-            ch = line[i]
-            if ch.isdigit():
-                total += int(ch)
-                break
-            flag = False
-            for digit_word in digits_map_reversed:
-                if line[i:].startswith(digit_word):
-                    flag = True
-                    total += digits_map_reversed[digit_word]
-                    break
-            if flag: 
-                break
+
     print(total)
 
 
