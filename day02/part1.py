@@ -6,7 +6,6 @@ def main() -> None:
     max_colors = {"red": 12, "green": 13, "blue": 14}
     
     for i, line in enumerate(lines):
-        id = i + 1
         _, moves = line.split(": ")
         moves = moves.split("; ")
         is_valid = True
@@ -15,15 +14,9 @@ def main() -> None:
             for part in show:
                 n, color = part.split(" ")
                 n = int(n)
-                thresh = max_colors[color]
-                if n > thresh:
-                    is_valid = False
-                    break
-            if not is_valid:
-                break
+                is_valid = is_valid and n <= max_colors[color]
         if is_valid:
-            print(f"{id} valid")
-            total += id
+            total += i + 1
     
     print(total)
 

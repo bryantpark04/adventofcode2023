@@ -1,17 +1,13 @@
-import sys
-
 def main() -> None:
     with open("input.txt") as f:
         lines = f.read().splitlines()
     
     total = 0
     
-    for i, line in enumerate(lines):
+    for _, line in enumerate(lines):
         max_colors = {"red": 0, "green": 0, "blue": 0}
-        id = i + 1
         _, moves = line.split(": ")
         moves = moves.split("; ")
-        is_valid = True
         for move in moves:
             show = move.split(", ")
             for part in show:
