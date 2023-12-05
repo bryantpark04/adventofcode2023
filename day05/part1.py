@@ -19,15 +19,12 @@ def main() -> None:
     res = sys.maxsize
     
     for seed in seeds:
-        for i, stage in enumerate(maps):
-            for selected in range(len(stage)):
-                translate_base, base, range_length = stage[selected]
-                print(f"{i=} {seed}->", end="")
-                if seed >= base and seed - base < range_length:
-                    seed = seed - base + translate_base
-                    break
-                print(f"{seed}")
-        print(f"{seed=}")
+        for stage in maps:
+            ip = bisect.bisect_right(stage, seed, key=lambda t: t[1])
+            selected = ip - 1
+            translate_base, base, range_length = stage[selected]
+            if seed >= base and seed - base < range_length:
+                seed = seed - base + translate_base
         res = min(res, seed)
 
     print(res)

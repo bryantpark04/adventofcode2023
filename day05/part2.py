@@ -21,7 +21,7 @@ def main() -> None:
     it = iter(seeds)
     i = 0
     for seed_base in it:
-        print(i, len(seeds) // 2)
+        print(i, len(seeds) // 2)   # to keep track of rough progress
         seed_range_length = next(it)
         for seed in range(seed_base, seed_base + seed_range_length):
             for stage in maps:
